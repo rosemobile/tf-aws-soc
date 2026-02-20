@@ -195,6 +195,12 @@ resource "aws_instance" "windows_endpoint" {
   iam_instance_profile   = aws_iam_instance_profile.endpoint_profile.name
   key_name               = var.ssh_key_name
 
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 1
+  }
+
   root_block_device {
     volume_size           = 35 # Windows requires minimum 30GB
     volume_type           = "gp3"
